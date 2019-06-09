@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    RED.nodes.registerType('openhab2_out_tweak',{
+        category: 'home automation',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: "" },
+            controller:  { value: "", type: "openhab2-controller", required:true },
+            itemname:  { value: "", required: false },
+            topic: { value: "", required: false },
+            payload:  { value: "", required: false }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "node-red-contrib-openhab2.png",
+        paletteLabel: "openhab2-out-tweak",
+        label: function() {
+            return this.name || this.itemname || "openhab2 out tweak";
+        },
+        oneditprepare: function() {
+            // openhabEditPrepare(this, false);
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="openhab2_out_tweak">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name"/>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-controller"><i class="fa fa-globe"></i> Controller</label>
+        <input type="text" id="node-input-controller"/>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-itemname"><i class="fa fa-crosshairs"></i> ItemName</label>
+        <input type="text" id="node-input-itemname"/>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <select id="node-input-topic" name="node-input-topic" style="width: 250px;">
+            <option value=""/>
+            <option value="ItemCommand">ItemCommand</option>
+            <option value="ItemUpdate">ItemUpdate</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-payload"><i class="fa fa-envelope"></i> Payload</label>
+        <input type="text" id="node-input-payload" placeholder="Payload">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="openhab2_out_tweak">
+    <p>
+        Node will act like openhab2 output node but will handle boolean values.
+    </p>
+</script>

@@ -1,12 +1,15 @@
 {
-    "name": "node-red-contrib-openhab2-tweaks",
-    "version": "1.0.0",
-    "description": "Nodes that will tweak messages from node-red-contrib-openhab2 nodes",
-    "author": "Joseph Goncalves",
-    "license": "ISC",
+    "name" : "node-red-contrib-openhab2-tweaks",
+    "version" : "1.0.0",
+    "description" : "Nodes that will tweak messages from node-red-contrib-openhab2 nodes",
+    "author" : "Joseph Goncalves",
+    "license" : "ISC",
     "node-red" : {
-        "nodes": {
-            "tweak_in": "tweak-in.js"
+        "nodes" : {
+            "tweak_in" : "tweak-in.js",
+            "openhab2_in_command" : "openhab2-in-command.js",
+            "openhab2_in_state" : "openhab2-in-state.js",
+            "openhab2_out_tweak" : "openhab2-out-tweak.js"
         }
     }
 }
