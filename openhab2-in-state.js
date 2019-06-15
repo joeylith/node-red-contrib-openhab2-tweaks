@@ -62,5 +62,5 @@ module.exports = function(RED) {
 
     }
 
-    RED.nodes.registerType("openhab2_in_state", Openhab2InState);
+    RED.nodes.registerType("openhab2-in-state", Openhab2InState);
 }

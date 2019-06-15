@@ -12,7 +12,7 @@ module.exports = function(RED) {
             // if a item/topic/payload is specified in the node's configuration, it overrides the item/topic/payload specified in the message
             var item = config.itemname || msg.item;
             var topic = config.topic || msg.topic;
-            var payload = config.payload || (typeof msg.payload === 'boolean') ? (msg.payload ? 'ON' : 'OFF') : msg.payload;
+            var payload = config.payload || (typeof msg.payload === 'boolean' ? (msg.payload ? 'ON' : 'OFF') : msg.payload);
 
             if ( payload != undefined ) {
                 // execute the appropriate http POST to send the command to openHAB
@@ -47,5 +47,5 @@ module.exports = function(RED) {
         });
     }
 
-    RED.nodes.registerType("openhab2_out_tweak", Openhab2OutTweak);
+    RED.nodes.registerType("openhab2-out-tweak", Openhab2OutTweak);
 }

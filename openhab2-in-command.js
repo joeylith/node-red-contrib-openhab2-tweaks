@@ -59,5 +59,5 @@ module.exports = function(RED) {
 
     }
 
-    RED.nodes.registerType("openhab2_in_command", Openhab2InCommand);
+    RED.nodes.registerType("openhab2-in-command", Openhab2InCommand);
 }

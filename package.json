@@ -6,10 +6,9 @@
     "license" : "ISC",
     "node-red" : {
         "nodes" : {
-            "tweak_in" : "tweak-in.js",
-            "openhab2_in_command" : "openhab2-in-command.js",
-            "openhab2_in_state" : "openhab2-in-state.js",
-            "openhab2_out_tweak" : "openhab2-out-tweak.js"
+            "openhab2-in-command" : "openhab2-in-command.js",
+            "openhab2-in-state" : "openhab2-in-state.js",
+            "openhab2-out-tweak" : "openhab2-out-tweak.js"
         }
     }
 }
