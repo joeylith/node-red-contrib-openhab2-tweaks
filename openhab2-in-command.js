@@ -12,19 +12,35 @@ module.exports = function(RED) {
         if (itemName != undefined) itemName = itemName.trim();
 
         this.refreshNodeStatus = function() {
-            var currentCommand = node.context().currentCommand;
+            var context = node.context();
 
-            if (currentCommand == null)
-                node.status({fill:"yellow", shape: "ring", text: "command:" + currentCommand});
+            var currentCommand = context.currentCommand;
+            
+            var status = {fill:"blue", shape: "ring", text: "command:" + currentCommand};
 
-            else if (currentCommand == "ON")
-                node.status({fill:"green", shape: "dot", text: "command:" + currentCommand});
+            if (!currentCommand) status.fill = "yellow";
 
-            else if (currentCommand == "OFF")
-                node.status({fill:"green", shape: "ring", text: "command:" + currentCommand});
+            else if (currentCommand == "ON") {
+                status.fill = "green";
+                status.shape = "dot";
+            }
+            else if (currentCommand == "OFF") {
+                status.fill = "red";
+                status.shape = "dot";
+            }
 
-            else
-                node.status({fill:"blue", shape: "ring", text: "command:" + currentCommand});
+            node.status(status);
+
+            if (context.timer) clearTimeout(context.timer);
+
+            context.timer = 
+                setTimeout(function() {
+                    node.status({
+                        fill: status.fill,
+                        text: status.text,
+                        shape: "ring"
+                    });
+                }, 30000);
         };
 
         this.processRawEvent = function(event) {

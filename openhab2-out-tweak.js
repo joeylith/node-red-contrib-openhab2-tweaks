@@ -21,10 +21,26 @@ module.exports = function(RED) {
                 openhabController.control(item, topic, payload,
                                           function(body) {
                                               // no body expected for a command or update
-                                              node.status({fill: "green", 
+                                              var status = {fill: "green", 
                                                            shape: "dot", 
                                                            text: payload + " => " + item + "/" + 
-                                                                 topic.replace("Item", "").toLowerCase()});
+                                                                 topic.replace("Item", "").toLowerCase()};
+
+                                              node.status(status);
+
+                                              var context = node.context();
+
+                                              if (context.timer) clearTimeout(context.timer);
+
+                                              context.timer = 
+                                                  setTimeout(function() {
+                                                      node.status({
+                                                          fill: status.fill,
+                                                          text: status.text,
+                                                          shape: "ring"
+                                                      });
+                                                  }, 30000);
+
                                               node.send(msg);
                                           },
                                           function(err) {
