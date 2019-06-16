@@ -16,7 +16,7 @@ module.exports = function(RED) {
 
             var currentState = context.currentState;
             
-            var status = {fill:"blue", shape: "ring", text: "command:" + currentState};
+            var status = {fill:"blue", shape: "ring", text: "state:" + currentState};
 
             if (!currentState) status.fill = "yellow";
 
