@@ -50,8 +50,32 @@ module.exports = function(RED) {
                 }, 30000);
         };
 
+        this.processStateEvent = function(event) {
+
+            var context = node.context();
+            var currentMessage = event.state;
+
+            if ( !config.outputall && context.currentMessage.ItemStateEvent == currentMessage ) return;
+
+            // update node's context variable
+            context.currentMessage.ItemStateEvent = currentMessage;
+            context.currentEventType = 'ItemStateEvent';
+
+            // update node's visual status
+            node.refreshNodeStatus();
+
+            // inject the state in the node-red flow
+            node.send({_msgid: event._msgid, 
+                        topic: 'smarthome/items/' + itemName + '/state', 
+                        payload: currentMessage, 
+                        item: itemName, 
+                        event: 'StateEvent', 
+                        type: 'ItemStateEvent'});
+
+        };
+
         this.processRawEvent = function(event) {
-            if (config.eventtype && event.type != config.eventtype) return;
+            if (event.type == 'ItemStateEvent' || (config.eventtype && event.type != config.eventtype)) return;
 
             var context = node.context();
             var currentMessage = event.payload.value;
@@ -79,13 +103,21 @@ module.exports = function(RED) {
         var context = node.context();
         context.currentMessage = {};
 
-        openhabController.addListener(itemName + '/RawEvent', node.processRawEvent);
+        if (config.eventtype != 'ItemStateEvent')
+            openhabController.addListener(itemName + '/RawEvent', node.processRawEvent);
+
+        if (config.eventtype == null || config.eventtype == 'ItemStateEvent') 
+            openhabController.addListener(itemName + '/StateEvent', node.processStateEvent);
 
         // only set status at startup if eventtype is defined
         if (config.eventtype != null) node.refreshNodeStatus();
 
         this.on("close", function() {
-            openhabController.removeListener(itemName + '/RawEvent', node.processRawEvent);
+            if (config.eventtype != 'ItemStateEvent')
+                openhabController.removeListener(itemName + '/RawEvent', node.processRawEvent);
+
+            if (config.eventtype == null || config.eventtype == 'ItemStateEvent') 
+                openhabController.removeListener(itemName + '/StateEvent', node.processStateEvent);
         });
 
     }
