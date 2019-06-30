@@ -106,17 +106,20 @@ module.exports = function(RED) {
         if (config.eventtype != 'ItemStateEvent')
             openhabController.addListener(itemName + '/RawEvent', node.processRawEvent);
 
-        if (config.eventtype == null || config.eventtype == 'ItemStateEvent') 
+        if (config.eventtype == '' || config.eventtype == 'ItemStateEvent') 
             openhabController.addListener(itemName + '/StateEvent', node.processStateEvent);
 
         // only set status at startup if eventtype is defined
-        if (config.eventtype != null) node.refreshNodeStatus();
+        if (config.eventtype != '') 
+            node.refreshNodeStatus();
+        else
+            node.status({fill: null, text: null, shape: null});
 
         this.on("close", function() {
             if (config.eventtype != 'ItemStateEvent')
                 openhabController.removeListener(itemName + '/RawEvent', node.processRawEvent);
 
-            if (config.eventtype == null || config.eventtype == 'ItemStateEvent') 
+            if (config.eventtype == '' || config.eventtype == 'ItemStateEvent') 
                 openhabController.removeListener(itemName + '/StateEvent', node.processStateEvent);
         });
 
