@@ -33,14 +33,16 @@ module.exports = function(RED) {
 
             if (context.timer) clearTimeout(context.timer);
 
-            context.timer = 
+            context.flow.ringstatus_timeout = context.flow.ringstatus_timeout || 120000;
+
+            context.timer =
                 setTimeout(function() {
                     node.status({
                         fill: status.fill,
                         text: status.text,
                         shape: "ring"
                     });
-                }, 120000);
+                }, context.flow.ringstatus_timeout);
         };
 
         this.processStateEvent = function(event) {
