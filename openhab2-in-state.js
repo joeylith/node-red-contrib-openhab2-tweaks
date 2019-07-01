@@ -40,7 +40,7 @@ module.exports = function(RED) {
                         text: status.text,
                         shape: "ring"
                     });
-                }, 30000);
+                }, 120000);
         };
 
         this.processStateEvent = function(event) {
